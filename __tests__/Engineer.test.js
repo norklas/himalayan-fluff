@@ -1,4 +1,4 @@
-// Engineer constructor
+// Importing Engineer constructor
 const Engineer = require("../lib/Engineer");
 
 // Testing engineer object creation
