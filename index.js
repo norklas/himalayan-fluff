@@ -32,7 +32,7 @@ const addManager = () => {
       {
         type: "input",
         name: "id",
-        message: "Please enther the manager's ID:",
+        message: "Please enter the manager's ID:",
         validate: (idInput) => {
           return idInput ? true : console.log("Please enter the manager's ID!");
         },
@@ -52,7 +52,7 @@ const addManager = () => {
       {
         type: "input",
         name: "officeNumber",
-        message: "Please enter the manager's office number",
+        message: "Please enter the manager's office number:",
         validate: (officeNumberInput) => {
           return isNaN(officeNumberInput)
             ? (console.log("Please enter an office number!"), false)
