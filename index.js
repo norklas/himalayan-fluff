@@ -9,6 +9,9 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 
+// Page creation
+const generateHTML = require("./src/generateHTML");
+
 // Array to hold team members
 const teamArr = [];
 
@@ -145,8 +148,10 @@ const addEmployee = () => {
         employeeInput;
       let employee;
 
+      // If role is Engineer then add new Engineer class with destructured data
       if (role === "Engineer") {
         employee = new Engineer(name, id, email, github);
+        // If role is Intern then add new Intern class with destructured data
       } else if (role === "Intern") {
         employee = new Intern(name, id, email, school);
       }
@@ -161,4 +166,37 @@ const addEmployee = () => {
     });
 };
 
-addManager().then(addEmployee);
+// Function to generate HTML page using node file system
+const writeFile = (data) => {
+  fs.writeFile("./dist/index.html", data, (err) => {
+    // If error is true
+    if (err) {
+      console.log(err);
+      return;
+      // Once profile is created
+    } else {
+      console.log(
+        "Your team profile has been successfully created! Please look at index.html to see!"
+      );
+    }
+  });
+};
+
+// Calling addManager
+addManager()
+  // Once addManager is done, then addEmployee is called
+  .then(addEmployee)
+  // Once addEmployee is done, then push both addManager, and addEmployee data to teamArr
+  .then((teamArr) => {
+    // Generate HTML page once teamArr has data
+    return generateHTML(teamArr);
+  })
+  // Once page is generated, then use pageHTML data
+  .then((pageHTML) => {
+    // call writeFile with pageHTML data, which will then write the index.html
+    return writeFile(pageHTML);
+  })
+  // Catchiung any errors and console.log them
+  .catch((err) => {
+    console.log(err);
+  });
